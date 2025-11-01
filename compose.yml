@@ -1,0 +1,18 @@
+services:
+  tinyproxy:
+    build: .
+    container_name: tinyproxy
+    ports:
+      - "8888:8888"
+    environment:
+      - PROXY_USER=user
+      - PROXY_PASS=userPass123
+    restart: always
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8888"]
+      interval: 30m
+      timeout: 5s
+      retries: 3
